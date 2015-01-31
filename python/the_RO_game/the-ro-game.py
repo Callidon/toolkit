@@ -6,13 +6,6 @@
 import json
 import sys
 
-# Fonction qui retounre les n premiers émléments de la liste l
-def split_list(l, n):
-	if n < 1:
-		n = 1
-	return [l[i:i + n] for i in range(0, len(l), n)][0]
-
-
 # vérification du nombre d'arguments
 if len(sys.argv) != 2:
 	print("Erreur : le script doit être appelé avec exactement 1 argument")
@@ -33,7 +26,7 @@ with open(json_file,'r') as json_data:
 			# on parcours la liste des joueurs de l'équipe
 			for player_name in team["players"]:
 				# création de la variable de réponse pour le joueur
-				res_player = { "name" : player_name, "top-5" : []}
+				res_player = { "name" : player_name, "scores" : []}
 
 				# on parcours la liste des joueurs de l'autre équipe
 				for other_player in data["teams"][1]["players"]:
@@ -47,7 +40,7 @@ with open(json_file,'r') as json_data:
 
 					# ajout de res_other dans res_player
 					if res_other["score"] > 0:
-						res_player["top-5"].append(res_other)
+						res_player["scores"].append(res_other)
 
 				# ajout de res_player dans res_team
 				res_team["players"].append(res_player)
@@ -61,7 +54,7 @@ with open(json_file,'r') as json_data:
 			# on parcours la liste des joueurs de l'équipe
 			for player_name in team["players"]:
 				# création de la variable de réponse pour le joueur
-				res_player = { "name" : player_name, "top-5" : []}
+				res_player = { "name" : player_name, "scores" : []}
 
 				# on parcours la liste des joueurs de l'autre équipe
 				for other_player in data["teams"][0]["players"]:
@@ -75,7 +68,7 @@ with open(json_file,'r') as json_data:
 
 					# ajout de res_other dans res_player
 					if res_other["score"] > 0:
-						res_player["top-5"].append(res_other)
+						res_player["scores"].append(res_other)
 
 				# ajout de res_player dans res_team
 				res_team["players"].append(res_player)
