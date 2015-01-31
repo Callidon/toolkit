@@ -1,0 +1,46 @@
+{
+	"teams": [
+				{
+					"team-name": "601",
+					"players": [
+						"Thibault",
+						"Dennis",
+						"Theo",
+						"Florian",
+						"Arnaud",
+						"Nicolas",
+						"Sylvain",
+						"Quentin",
+						"Guillaume",
+						"Corentin",
+						"Thomas",
+						"Benjamin",
+						"Shirley",
+						"Arthur",
+						"Charlene"
+					]
+
+				},
+				{
+					"team-name": "609",
+					"players": [
+						"Simon",
+						"Alexandre",
+						"Tommy",
+						"Axel",
+						"Guillaume",
+						"Marie",
+						"Romain",
+						"Antoine",
+						"Anas",
+						"Maxime",
+						"Amenan",
+						"Eflamm",
+						"Arthur",
+						"Quentin",
+						"Jordan"
+					]
+				}
+	]
+
+}
