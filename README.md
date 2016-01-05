@@ -1,2 +1,2 @@
 # toolkit
-All kind of useful stuff
+Personal experimentations & other stuff
