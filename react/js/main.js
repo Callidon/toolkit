@@ -31,7 +31,6 @@ const CommentBox = React.createClass({
 	}
 });
 
-// A list of comments
 const CommentList = React.createClass({
 	render: function () {
 		const commentNodes = this.props.data.map((comment) => {
