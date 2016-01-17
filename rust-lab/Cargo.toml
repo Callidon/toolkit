@@ -1,0 +1,4 @@
+[package]
+name = "rust-lab"
+version = "0.1.0"
+authors = ["Thomas Minier <tminier01@gmail.com>"]
