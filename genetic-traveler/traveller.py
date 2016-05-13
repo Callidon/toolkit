@@ -1,15 +1,20 @@
 import random
 
+
 class Traveller:
     """Class which represent a travelling salesman
     Author : Thomas Minier
     """
 
-    def __init__(self):
+    def __init__(self, id=None):
+        self.id = id
         self.path = list()
 
     def __eq__(self, other):
         return self.path == other.path
+
+    def __repr__(self):
+        return '<Traveller : {}>'.format(self.id)
 
     def addCity(self, city):
         self.path.append(city)
@@ -18,10 +23,11 @@ class Traveller:
         """Evaluate the quality of the path taken by the traveller
         """
         pathLength = 0
-        previousCity = self.path[0]
-        for city in range(1,len(self.path)):
-            pathLength += previousCity.distanceWith(self.path[city])
-            previousCity = city
+        if len(self.path) > 0:
+            previousCity = self.path[0]
+            for ind in range(1, len(self.path)):
+                pathLength += previousCity.distanceWith(self.path[ind])
+                previousCity = self.path[ind]
         return pathLength
 
     def breed(self, partner):

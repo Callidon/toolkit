@@ -6,15 +6,16 @@ import random
 from city import City
 from traveller import Traveller
 
-def selection(population):
+
+def selection(population, sampleSize):
     newPopulation = list()
     populationSize = len(population)
     # sort member by evaluation score
     sortedPopulation = sorted(population, key=lambda traveller: traveller.evaluatePath())
-    print(sortedPopulation)
 
     # take the best evaluated for the new population
-    return newPopulation
+    return sortedPopulation[:sampleSize]
+
 
 def reproduce(population, nbPartners):
     newPopulation = list()
@@ -28,25 +29,35 @@ def reproduce(population, nbPartners):
 
     return newPopulation
 
+
 def main():
-    father = Traveller()
-    mother = Traveller()
+    father = Traveller(1)
+    mother = Traveller(2)
     nantes = City("Nantes")
     paris = City("Paris")
     lyon = City("Lyon")
 
     nantes.addNeighbour(paris, 10)
+    nantes.addNeighbour(lyon, 20)
+    paris.addNeighbour(nantes, 10)
+    paris.addNeighbour(lyon, 30)
+    lyon.addNeighbour(nantes, 20)
+    lyon.addNeighbour(paris, 30)
 
     father.addCity(lyon)
     father.addCity(paris)
     father.addCity(nantes)
-    #print(father.evaluatePath())
+
     mother.addCity(nantes)
     mother.addCity(lyon)
     mother.addCity(paris)
 
+    print(father.evaluatePath())
+    print(mother.evaluatePath())
+    print(selection([mother, father], 1))
+
     children = father.breed(mother)
-    print(children.path)
+    # print(children.path)
 
 
 if __name__ == "__main__":
