@@ -9,19 +9,25 @@ class City:
         self.neighbours = dict()
 
     def __eq__(self, other):
-        return (self.name == other.name) and (self.neighbours == other.neighbours)
+        if type(self) != type(other):
+            return False
+        else:
+            return (self.name == other.name) and (self.neighbours == other.neighbours)
 
     def __hash__(self):
         return hash(self.name)
+
+    def __repr__(self):
+        return "<City : " + self.name + " | neighbours : " + str(self.neighbours) + ">"
 
     def addNeighbour(self, name, distance):
         self.neighbours[name] = distance
 
     def distanceWith(self, name):
-        if(name in self.neighbours):
-            return self.neighbours[name]
-        else:
-            return None
+        return self.neighbours[name]
 
-    def __repr__(self):
-        return "<City : " + self.name + " | neighbours : " + str(self.neighbours) + ">"
+    def from_json(name, neighbours):
+        city = City(name)
+        for neighbour_name, neighbour_distance in neighbours.items():
+            city.addNeighbour(neighbour_name, float(neighbour_distance))
+        return city

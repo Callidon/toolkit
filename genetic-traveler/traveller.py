@@ -11,10 +11,14 @@ class Traveller:
         self.path = list()
 
     def __eq__(self, other):
-        return self.path == other.path
+        if type(self) != type(other):
+            return False
+        else:
+            return self.path == other.path
 
     def __repr__(self):
-        return '<Traveller : {}>'.format(self.id)
+        cities = [city.name for city in self.path]
+        return '<Traveller : {}, cities : {}>'.format(self.id, cities)
 
     def addCity(self, city):
         self.path.append(city)
@@ -26,14 +30,14 @@ class Traveller:
         if len(self.path) > 0:
             previousCity = self.path[0]
             for ind in range(1, len(self.path)):
-                pathLength += previousCity.distanceWith(self.path[ind])
+                pathLength += previousCity.distanceWith(self.path[ind].name)
                 previousCity = self.path[ind]
         return pathLength
 
     def breed(self, partner):
         """Breed two travellers and produce a new one
         """
-        children = Traveller()
+        children = Traveller('Children{}'.format(random.random()))
         # take a sample city sequence from self
         locustInd = random.randint(0, len(self.path))
         locust = self.path[0:locustInd]
