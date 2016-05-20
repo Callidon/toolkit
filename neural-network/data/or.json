@@ -11,14 +11,14 @@
       1,
       0
     ],
-    "output" : 0
+    "output" : 1
   },
   "set3" : {
     "inputs" : [
       0,
       1
     ],
-    "output" : 0
+    "output" : 1
   },
   "set4" : {
     "inputs" : [
