@@ -9,6 +9,7 @@ class Traveller:
     def __init__(self, id=None):
         self.id = id
         self.path = list()
+        self.nbChilds = 0
 
     def __eq__(self, other):
         if type(self) != type(other):
@@ -18,7 +19,10 @@ class Traveller:
 
     def __repr__(self):
         cities = [city.name for city in self.path]
-        return '<Traveller : {}, cities : {}>'.format(self.id, cities)
+        return '<Traveller : {}{}, cities : {}>'.format(self.id, cities)
+
+    def printPath(self):
+        print([city.name for city in self.path])
 
     def addCity(self, city):
         self.path.append(city)
@@ -47,7 +51,7 @@ class Traveller:
     def breed(self, partner, mutateChance=-1.0):
         """Breed two travellers and produce a new one
         """
-        children = Traveller('Children{}'.format(random.random()))
+        children = Traveller('{}.{}'.format(self.id, self.nbChilds))
         # take a sample city sequence from self
         locustInd = random.randint(0, len(self.path))
         locust = self.path[0:locustInd]
@@ -62,4 +66,5 @@ class Traveller:
         # try to mutate the children
         if random.random() >= mutateChance:
             children.mutate()
+        self.nbChilds += 1
         return children

@@ -2,21 +2,31 @@
   "paris" : {
     "nantes" : 384.6,
     "lyon" : 383.1,
-    "rennes" : 352.6
+    "rennes" : 352.6,
+    "lilles" : 225.4
   },
   "nantes" : {
     "paris" : 384.6,
     "lyon" : 685.1,
-    "rennes" : 113.1
+    "rennes" : 113.1,
+    "lilles" : 600.1
   },
   "lyon" : {
     "paris" : 383.1,
     "nantes" : 685.1,
-    "rennes" : 740.6
+    "rennes" : 740.6,
+    "lilles" : 691.0
   },
   "rennes" : {
     "paris" : 352.6,
     "nantes" : 113.1,
-    "lyon" : 740.6
+    "lyon" : 740.6,
+    "lilles" : 571.1
+  },
+  "lilles" : {
+    "paris" : 225.4,
+    "nantes" : 600.1,
+    "lyon" : 691.0,
+    "rennes" : 571.1
   }
 }

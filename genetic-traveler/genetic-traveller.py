@@ -51,7 +51,7 @@ def main():
 
     # randomly generate first generation
     for n in range(int(args.population_size)):
-        traveller = Traveller('Traveller{}'.format(random.random()))
+        traveller = Traveller(str(n))
         path = random.sample(cities, len(cities))
         for city in path:
             traveller.addCity(city)
@@ -68,7 +68,13 @@ def main():
         population = selection(population, threshold)
 
     print('Generation n°{}'.format(nbIt))
-    print(['{} : {}'.format(traveller.id, traveller.evaluatePath()) for traveller in population])
+    for traveller in population:
+        print('-----------------------')
+        if len(traveller.id) == 1:
+            print('Traveller {} - path length = {}'.format(traveller.id, traveller.evaluatePath()))
+        else:
+            print('Children {} - path length = {}'.format(traveller.id, traveller.evaluatePath()))
+        traveller.printPath()
 
 if __name__ == "__main__":
     main()
