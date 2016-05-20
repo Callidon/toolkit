@@ -17,7 +17,7 @@ def selection(population, sampleSize):
     return sortedPopulation[:sampleSize]
 
 
-def reproduce(population, nbPartners):
+def reproduction(population, nbPartners):
     childrens = list()
     # each member breed with a random sample of travellers
     for traveller in population:
@@ -63,7 +63,7 @@ def main():
         previousPopulation = list(population)
         nbIt += 1
         # perform reproduction
-        population = reproduce(population, math.ceil(len(population) / 2))
+        population = reproduction(population, math.ceil(len(population) / 2))
         # perform selection
         population = selection(population, threshold)
 

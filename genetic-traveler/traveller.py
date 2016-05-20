@@ -34,7 +34,17 @@ class Traveller:
                 previousCity = self.path[ind]
         return pathLength
 
-    def breed(self, partner):
+    def mutate(self):
+        """Apply a mutation to the traveller
+        """
+        # swap two cities in the path
+        first = random.randrange(len(self.path))
+        second = random.choice([i for i in range(len(self.path)) if i != first])
+        tmp = self.path[first]
+        self.path[first] = self.path[second]
+        self.path[second] = tmp
+
+    def breed(self, partner, mutateChance=-1.0):
         """Breed two travellers and produce a new one
         """
         children = Traveller('Children{}'.format(random.random()))
@@ -49,4 +59,7 @@ class Traveller:
                 ind += 1
             else:
                 children.addCity(city)
+        # try to mutate the children
+        if random.random() >= mutateChance:
+            children.mutate()
         return children
