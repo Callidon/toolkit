@@ -3,6 +3,7 @@ package bencode
 import (
 	"bytes"
 	"strconv"
+	"strings"
 )
 
 // Serialize a string using Bencode standard
@@ -26,8 +27,10 @@ func SerializeList(list []string) []byte {
 // Deserialize a string serialized using Bencode standard
 // Reference : https://en.wikipedia.org/wiki/Bencode
 func DeserializeStr(bencode []byte) (string, int) {
-	length, _ := strconv.Atoi(string(bencode[0]))
-	return string(bencode[2:]), length
+	str := string(bencode)
+	strLength := strings.Split(str, ":")[0]
+	length, _ := strconv.Atoi(strLength)
+	return str[len(strLength)+1:], length
 }
 
 // Deserialize a list of strings serialized using Bencode standard
@@ -35,11 +38,13 @@ func DeserializeStr(bencode []byte) (string, int) {
 func DeserializeList(bencode []byte) ([]string, int) {
 	list := make([]string, 0)
 	ind := 1
+	str := string(bencode)
 	for ind < len(bencode)-1 {
-		eltLength, _ := strconv.Atoi(string(bencode[ind]))
-		elt, _ := DeserializeStr(bencode[ind : ind+eltLength+2])
+		strLength := strings.Split(str[ind:], ":")[0]
+		length, _ := strconv.Atoi(strLength)
+		elt, _ := DeserializeStr(bencode[ind : ind+length+1])
 		list = append(list, elt)
-		ind += eltLength + 2
+		ind += length + 1 + len(strLength)
 	}
 	return list, len(list)
 }
