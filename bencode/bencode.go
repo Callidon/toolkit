@@ -1,3 +1,5 @@
+// Package bencode provides utilies to work with Bencode encoding format
+// Bencode reference : https://en.wikipedia.org/wiki/Bencode
 package bencode
 
 import (
