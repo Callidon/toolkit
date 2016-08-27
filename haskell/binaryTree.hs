@@ -1,30 +1,43 @@
--- Implementation of a Binary Search tree in Haskell
+-- Implementation of a Binary Search Tree in Haskell
 -- author : Thomas Minier
 
-data Tree a = EmptyTree | Node a (Tree a) (Tree a) deriving (Show, Read, Eq)
+data BST a = EmptyTree | Node a (BST a) (BST a) deriving (Show, Read, Eq)
 
-insert :: (Ord a) => a -> Tree a -> Tree a
+-- Insert a value in a Binary Search Tree
+insert :: (Ord a) => a -> BST a -> BST a
 insert x EmptyTree = Node x EmptyTree EmptyTree
 insert x (Node y left right)
   | x == y = Node x left right
   | x < y = Node y (insert x left) right
   | x > y = Node y left (insert x right)
 
-contains :: (Ord a) => a -> Tree a -> Bool
+-- Test if a Binary search Tree contains a specific value,
+contains :: (Ord a) => a -> BST a -> Bool
 contains x EmptyTree = False
 contains x (Node y left right)
     | x == y = True
     | x < y  = contains x left
     | x > y  = contains x right
 
-delete :: (Ord a) => a -> Tree a -> Tree a
+-- Remove a value from a Binary Search Tree
+delete :: (Ord a) => a -> BST a -> BST a
 delete _ EmptyTree = EmptyTree
 delete x (Node y left right)
-  | x < y = delete x left
-  | x > y = delete x right
-  | x == y = Node (maxTree right) left right -- need to remove the Leaf with the max elt in right
+  | x < y = Node y (delete x left) right
+  | x > y = Node y left (delete x right)
+  | x == y = case (left, right) of
+    (EmptyTree, _)  -> right
+    (_, EmptyTree)  -> left
+    (Node _ _ _, _) -> Node y' left' right where (y', left') = deleteMax left
 
-validTree :: (Ord a) => Tree a -> Bool
+-- Remove the max value of a non-empty Binary Search BST and returns both this value and the new tree
+deleteMax :: (Ord a) => BST a -> (a, BST a)
+deleteMax EmptyTree = error "Cannot delete the maximum of a empty tree"
+deleteMax (Node x left EmptyTree) = (x, left)
+deleteMax (Node x left right) = (x', Node x left' right) where (x', left') = deleteMax left
+
+-- Test if a Binary Search Tree is correctly build
+validTree :: (Ord a) => BST a -> Bool
 validTree EmptyTree = True
 validTree (Node _ EmptyTree EmptyTree) = True
 validTree (Node _ left EmptyTree) = validTree left
@@ -33,17 +46,21 @@ validTree (Node x left@(Node y _ _) right@(Node z _ _))
   | (x < y) && (x > z) = validTree left && validTree right
   | otherwise = False
 
-minTree :: (Ord a) => Tree a -> Tree a
+-- Find the minimum value of a Binary Search Tree
+minTree :: (Ord a) => BST a -> a
 minTree (Node x EmptyTree _) = x
 minTree (Node _ left _) = minTree left
 
-maxTree :: (Ord a) => Tree a -> a
+-- Find the maximum value of a Binary search Tree
+maxTree :: (Ord a) => BST a -> a
 maxTree (Node x _ EmptyTree) = x
 maxTree (Node _ _ right) = maxTree right
 
-fromList :: (Ord a) => [a] => Tree a
+-- Construct a Binary Search Tree from a list of values
+fromList :: (Ord a) => [a] => BST a
 fromList x = foldr insert EmptyTree x
 
-toList :: (Ord a) => Tree a -> [a]
+-- Construct a list from a Binary Search Tree
+toList :: (Ord a) => BST a -> [a]
 toList EmptyTree = []
 toList (Node x left right) = (toList left) ++ [x] ++ (toList right)
